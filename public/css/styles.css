@@ -1,0 +1,37 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+nav {
+    display: flex;
+    border-bottom: 2px solid;
+    padding: 0 0 10px 0;
+}
+
+nav img {
+    height: 100px;
+    margin: 10px;
+}
+
+#main {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.img-card {
+    border: 1px solid black;
+    width: 400px;
+    padding: 15px;
+    margin: 15px;
+}
+
+.img-wrapper {
+    margin-bottom: 10px;
+}
+
+.img-card img {
+    width: 100%;
+}
