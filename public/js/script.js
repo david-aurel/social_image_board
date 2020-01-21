@@ -11,7 +11,9 @@
         mounted: function() {
             var vueInstance = this;
             axios.get('/images').then(function(res) {
-                vueInstance.images = res.data;
+                for (var i = res.data.length - 1; i >= 0; i--) {
+                    vueInstance.images.push(res.data[i]);
+                }
             });
         },
         methods: {
