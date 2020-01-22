@@ -53,3 +53,7 @@ nav form {
 .closeModal {
     font-size: 40px;
 }
+
+.modal img {
+    max-height: 200px;
+}

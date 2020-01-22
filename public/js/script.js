@@ -3,7 +3,10 @@
         props: ['modalId'],
         data: function() {
             return {
-                image: null
+                image: null,
+                title: null,
+                description: null,
+                username: null
             };
         },
         template: '#modal',
@@ -11,6 +14,9 @@
             var vueInstance = this;
             axios.get(`/imageById/${vueInstance.modalId}`).then(function(res) {
                 vueInstance.image = res.data.url;
+                vueInstance.title = res.data.title;
+                vueInstance.description = res.data.description;
+                vueInstance.username = res.data.username;
             });
         },
         methods: {
@@ -39,13 +45,12 @@
         },
         methods: {
             handleClick: function(e) {
-                console.log('vue handleClick happenend');
                 e.preventDefault();
                 var formData = new FormData();
                 formData.append('title', this.title);
                 formData.append('description', this.description);
                 formData.append('username', this.username);
-                formData.append('username', this.username);
+
                 formData.append('file', this.file);
 
                 var vueInstance = this;
@@ -53,8 +58,6 @@
                     .post('/upload', formData)
 
                     .then(function(res) {
-                        console.log('axios POST to /upload happened');
-                        console.log('response from POST /upload', res.data);
                         vueInstance.images.unshift(res.data);
                     })
                     .catch(function(err) {
