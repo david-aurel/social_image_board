@@ -6,7 +6,9 @@
                 image: null,
                 title: null,
                 description: null,
-                username: null
+                username: null,
+                comments: [],
+                commentToUpload: {}
             };
         },
         template: '#modal',
@@ -22,6 +24,17 @@
         methods: {
             closeModal: function() {
                 this.$emit('close');
+            },
+            comment: function(e) {
+                e.preventDefault();
+                var comment = this.commentToUpload.comment;
+                var username = this.commentToUpload.username;
+                var imageId = this.modalId;
+                axios
+                    .post(`/comment/${comment}/${username}/${imageId}`)
+                    .then(() => {
+                        console.log('axios post to upload comment worked');
+                    });
             }
         }
     });
@@ -44,7 +57,7 @@
             });
         },
         methods: {
-            handleClick: function(e) {
+            upload: function(e) {
                 e.preventDefault();
                 var formData = new FormData();
                 formData.append('title', this.title);
@@ -64,9 +77,7 @@
                         console.log('err in POST /upload', err);
                     });
             },
-            handleChange: function(e) {
-                console.log('handleChange is running');
-                console.log('file:', e.target.files[0]);
+            handleFile: function(e) {
                 this.file = e.target.files[0];
             },
             closeModal: function() {

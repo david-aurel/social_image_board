@@ -17,3 +17,10 @@ exports.addImage = (url, username, title, description) => {
         [url, username, title, description]
     );
 };
+
+exports.addComment = (comment, username, imageId) => {
+    return db.query(
+        `INSERT INTO comments (comment, username, imageId) VALUES ($1, $2, $3)`,
+        [comment, username, imageId]
+    );
+};

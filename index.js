@@ -58,14 +58,25 @@ app.post('/upload', uploader.single('file'), s3.upload, (req, res) => {
 });
 
 app.get('/imageById/:id', (req, res) => {
-    console.log('GET /imageById/:id was hit');
-
+    // console.log('GET /imageById/:id was hit');
     db.getImageById(req.params.id)
         .then(results => {
             res.json(results[0]);
         })
         .catch(err => {
-            console.log(err);
+            console.log('err in GET /imageById/:id:', err);
+            res.sendStatus(500);
+        });
+});
+
+app.post('/comment/:comment/:username/:imageId', (req, res) => {
+    console.log('POST /comment/: route was hit');
+    db.addComment(req.params.comment, req.params.username, req.params.imageId)
+        .then(() => {
+            res.sendStatus(200);
+        })
+        .catch(err => {
+            console.log('err in POST /comment/:', err);
             res.sendStatus(500);
         });
 });

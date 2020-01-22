@@ -22,8 +22,8 @@
             <input v-model='title' type="text" name="title" placeholder="title">
             <input v-model='description' type="text" name="description" placeholder="description">
             <input v-model='username' type="text" name="username" placeholder="username">
-            <input @change='handleChange' type="file" accept="image/*" name="file">
-            <button @click='handleClick'>submit</button>
+            <input @change='handleFile' type="file" accept="image/*" name="file">
+            <button @click='upload'>submit</button>
         </form>
 
         <div class="images">
@@ -39,13 +39,20 @@
     <!-- Modal Script -->
     <script id="modal" type="text/x-template">
         <div class='modal'>
-            <div class=closeModal @click='closeModal'>
-                X
-            </div>
+            <!-- close modal -->
+            <div class=closeModal @click='closeModal'>X</div>
+            <!-- image -->
             <img :src="image">
             <p>title: {{title}}</p>
             <p>description: {{description}}</p>
             <p>username: {{username}}</p>
+            <!-- comments -->
+            <form>
+                <input v-model='commentToUpload.comment' type="text" name='comment' placeholder='comment'>
+                <input v-model='commentToUpload.username' type="text" name='username' placeholder='username'>
+                <button @click='comment'>submit</button>
+            </form>
+
         </div>
     </script>
 
