@@ -13,6 +13,11 @@
 
     </nav>
     <main id="main">
+        <modal
+        v-if='modalId'
+        @close='closeModal'
+        :modal-id='modalId'
+        ></modal>
         <form>
             <input v-model='title' type="text" name="title" placeholder="title">
             <input v-model='description' type="text" name="description" placeholder="description">
@@ -20,23 +25,9 @@
             <input @change='handleChange' type="file" accept="image/*" name="file">
             <button @click='handleClick'>submit</button>
         </form>
-        <p 
-        class="fruit"
-        v-for="fruit in fruits"
-        @click='selectedFruit = fruit.id'
-        >{{fruit.title}}
-        </p>
-
-        <first-component
-        v-if='selectedFruit'
-        post-title='My amazing article'
-        :id='selectedFruit'
-        @close='closeMe'
-        ></first-component>
-    
 
         <div class="images">
-            <div v-if='images' v-for='i in images' class="img-card">
+            <div v-if='images' v-for='i in images' class="img-card" @click='modalId = i.id'>
                  <div class="img-wrapper">
                      <img :src="i.url">
                  </div>    
@@ -45,16 +36,18 @@
         </div>
     </main>
 
-    <script type="text/x-template" id="template">
-        <div class='component'>
-            <h1 @click='closeModal'>This is my first component</h1>
-            <h2>My name is {{name}}</h2>
-            <button @click='count++'>Click me</button>
-            <p>Count: {{count}}</p>
-
-           
+    <!-- Modal Script -->
+    <script id="modal" type="text/x-template">
+        <div class='modal'>
+            <div class=closeModal @click='closeModal'>
+                X
+            </div>
+            <h1>Modal</h1>
+            <h3>{{test}}</h3>
         </div>
     </script>
+
+
     <!-- Scripts -->
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>

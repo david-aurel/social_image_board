@@ -1,48 +1,30 @@
 (() => {
-    Vue.component('first-component', {
-        template: '#template',
-        props: ['postTitle', 'id'],
+    Vue.component('modal', {
+        props: ['modalId'],
         data: function() {
             return {
-                name: 'David',
-                count: 0
+                test: 'test'
             };
         },
+        template: '#modal',
         mounted: function() {
-            console.log('component mounted');
-            console.log('my postTitle:', this.postTitle);
-            console.log('id:', this.id);
+            console.log('modalId:', this.modalId);
         },
         methods: {
             closeModal: function() {
-                console.log('closeModal fired');
-                this.$emit('close', this.count);
+                this.$emit('close');
             }
         }
     });
     new Vue({
         el: '#main',
         data: {
-            selectedFruit: null,
-            fruits: [
-                {
-                    title: '🥝',
-                    id: 1
-                },
-                {
-                    title: '🍓',
-                    id: 2
-                },
-                {
-                    title: '🍋',
-                    id: 3
-                }
-            ],
             images: [],
             title: '',
             description: '',
             username: '',
-            file: null
+            file: null,
+            modalId: false
         },
         mounted: function() {
             var vueInstance = this;
@@ -81,10 +63,8 @@
                 console.log('file:', e.target.files[0]);
                 this.file = e.target.files[0];
             },
-            closeMe: function(count) {
-                console.log('closeMe method fired. count: ', count);
-
-                this.selectedFruit = null;
+            closeModal: function() {
+                this.modalId = null;
             }
         }
     });
