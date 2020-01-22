@@ -20,6 +20,20 @@
             <input @change='handleChange' type="file" accept="image/*" name="file">
             <button @click='handleClick'>submit</button>
         </form>
+        <p 
+        class="fruit"
+        v-for="fruit in fruits"
+        @click='selectedFruit = fruit.id'
+        >{{fruit.title}}
+        </p>
+
+        <first-component
+        v-if='selectedFruit'
+        post-title='My amazing article'
+        :id='selectedFruit'
+        @close='closeMe'
+        ></first-component>
+    
 
         <div class="images">
             <div v-if='images' v-for='i in images' class="img-card">
@@ -31,6 +45,16 @@
         </div>
     </main>
 
+    <script type="text/x-template" id="template">
+        <div class='component'>
+            <h1 @click='closeModal'>This is my first component</h1>
+            <h2>My name is {{name}}</h2>
+            <button @click='count++'>Click me</button>
+            <p>Count: {{count}}</p>
+
+           
+        </div>
+    </script>
     <!-- Scripts -->
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>

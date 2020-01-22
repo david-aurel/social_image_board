@@ -40,3 +40,16 @@ nav form {
 .img-card img {
     width: 100%;
 }
+
+.component {
+    position: fixed;
+    background: rgba(255, 105, 180, 0.5);
+    top: 50px;
+    right: 0;
+    left: 0;
+    bottom: 50px;
+}
+
+.fruit {
+    font-size: 100px;
+}
