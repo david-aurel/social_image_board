@@ -3,12 +3,15 @@
         props: ['modalId'],
         data: function() {
             return {
-                test: 'test'
+                image: null
             };
         },
         template: '#modal',
         mounted: function() {
-            console.log('modalId:', this.modalId);
+            var vueInstance = this;
+            axios.get(`/imageById/${vueInstance.modalId}`).then(function(res) {
+                vueInstance.image = res.data.url;
+            });
         },
         methods: {
             closeModal: function() {

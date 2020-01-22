@@ -57,4 +57,17 @@ app.post('/upload', uploader.single('file'), s3.upload, (req, res) => {
     });
 });
 
+app.get('/imageById/:id', (req, res) => {
+    console.log('GET /imageById/:id was hit');
+
+    db.getImageById(req.params.id)
+        .then(results => {
+            res.json(results[0]);
+        })
+        .catch(err => {
+            console.log(err);
+            res.sendStatus(500);
+        });
+});
+
 app.listen(8080);
