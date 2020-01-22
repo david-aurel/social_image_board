@@ -69,11 +69,23 @@ app.get('/imageById/:id', (req, res) => {
         });
 });
 
+app.get('/comments/:imageId', (req, res) => {
+    // console.log('GET /comments route was hit');
+    db.getComments(req.params.imageId)
+        .then(results => {
+            res.json(results);
+        })
+        .catch(err => {
+            console.log('err in GET /comments:', err);
+            res.sendStatus(500);
+        });
+});
+
 app.post('/comment/:comment/:username/:imageId', (req, res) => {
-    console.log('POST /comment/: route was hit');
+    // console.log('POST /comment/: route was hit');
     db.addComment(req.params.comment, req.params.username, req.params.imageId)
-        .then(() => {
-            res.sendStatus(200);
+        .then(({ rows }) => {
+            res.json(rows[0]);
         })
         .catch(err => {
             console.log('err in POST /comment/:', err);

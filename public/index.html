@@ -52,6 +52,9 @@
                 <input v-model='commentToUpload.username' type="text" name='username' placeholder='username'>
                 <button @click='comment'>submit</button>
             </form>
+            <div v-if='comments' v-for='comment in comments' class='comments'>
+                <p>"{{comment.username}}" says "{{comment.comment}}"</p>
+            </div>
 
         </div>
     </script>

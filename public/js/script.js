@@ -14,11 +14,17 @@
         template: '#modal',
         mounted: function() {
             var vueInstance = this;
-            axios.get(`/imageById/${vueInstance.modalId}`).then(function(res) {
+            var imageId = this.modalId;
+            axios.get(`/imageById/${imageId}`).then(function(res) {
                 vueInstance.image = res.data.url;
                 vueInstance.title = res.data.title;
                 vueInstance.description = res.data.description;
                 vueInstance.username = res.data.username;
+            });
+            axios.get(`/comments/${imageId}`).then(function(res) {
+                for (var i = 0; i < res.data.length; i++) {
+                    vueInstance.comments.push(res.data[i]);
+                }
             });
         },
         methods: {
@@ -27,13 +33,14 @@
             },
             comment: function(e) {
                 e.preventDefault();
+                var vueInstance = this;
                 var comment = this.commentToUpload.comment;
                 var username = this.commentToUpload.username;
                 var imageId = this.modalId;
                 axios
                     .post(`/comment/${comment}/${username}/${imageId}`)
-                    .then(() => {
-                        console.log('axios post to upload comment worked');
+                    .then(function(res) {
+                        vueInstance.comments.push(res.data);
                     });
             }
         }

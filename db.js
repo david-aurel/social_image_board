@@ -20,7 +20,13 @@ exports.addImage = (url, username, title, description) => {
 
 exports.addComment = (comment, username, imageId) => {
     return db.query(
-        `INSERT INTO comments (comment, username, imageId) VALUES ($1, $2, $3)`,
+        `INSERT INTO comments (comment, username, imageId) VALUES ($1, $2, $3) RETURNING comment, username`,
         [comment, username, imageId]
     );
+};
+
+exports.getComments = imageId => {
+    return db
+        .query(`SELECT * FROM comments WHERE imageId = $1`, [imageId])
+        .then(({ rows }) => rows);
 };
