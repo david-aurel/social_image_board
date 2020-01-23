@@ -29,11 +29,14 @@
         </form>
 
         <div class="images">
-            <div v-if='images' v-for='i in images' class="img-card" @click='modalId = i.id'>
-                 <div class="img-wrapper">
-                     <img :src="i.url">
-                 </div>    
-                 <p>{{i.title}}</p>
+            <div v-if='images' v-for='i in images' class="img-card">
+                <a :href="'#' + i.id">
+                    <div class="img-wrapper">
+                        <img :src="i.url">
+                    </div>    
+                    <p>{{i.title}}</p>
+
+                </a>
             </div>
             <button v-if='showMoreButton' @click='more' class="more">more</button>
         </div>

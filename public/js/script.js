@@ -13,21 +13,33 @@
         },
         template: '#modal',
         mounted: function() {
-            var vueInstance = this;
-            var imageId = this.modalId;
-            axios.get(`/imageById/${imageId}`).then(function(res) {
-                vueInstance.image = res.data.url;
-                vueInstance.title = res.data.title;
-                vueInstance.description = res.data.description;
-                vueInstance.username = res.data.username;
-            });
-            axios.get(`/comments/${imageId}`).then(function(res) {
-                for (var i = 0; i < res.data.length; i++) {
-                    vueInstance.comments.push(res.data[i]);
-                }
-            });
+            this.loadModal();
+        },
+        watch: {
+            modalId: function() {
+                // i.e. when the user manually changes the hash, we want to update the modal
+                this.loadModal();
+            }
         },
         methods: {
+            loadModal: function() {
+                var vueInstance = this;
+                var imageId = this.modalId;
+                axios.get(`/imageById/${imageId}`).then(function(res) {
+                    vueInstance.image = res.data.url;
+                    vueInstance.title = res.data.title;
+                    vueInstance.description = res.data.description;
+                    vueInstance.username = res.data.username;
+                    if (res.data === '') {
+                        return vueInstance.closeModal();
+                    }
+                });
+                axios.get(`/comments/${imageId}`).then(function(res) {
+                    for (var i = 0; i < res.data.length; i++) {
+                        vueInstance.comments.push(res.data[i]);
+                    }
+                });
+            },
             closeModal: function() {
                 this.$emit('close');
             },
@@ -53,12 +65,17 @@
             description: '',
             username: '',
             file: null,
-            modalId: false,
+            modalId: location.hash.slice(1),
             lowestIdOnPage: 0,
             showMoreButton: true
         },
         mounted: function() {
+            var vueInstance = this;
             this.more();
+            this.infiniteScroll();
+            addEventListener('hashchange', function() {
+                vueInstance.modalId = location.hash.slice(1);
+            });
         },
         methods: {
             upload: function(e) {
@@ -85,6 +102,7 @@
                 this.file = e.target.files[0];
             },
             closeModal: function() {
+                location.hash = '';
                 this.modalId = null;
             },
             more: function() {
@@ -109,7 +127,25 @@
                         if (vueInstance.lowestIdOnPage === res.data[0].id) {
                             vueInstance.showMoreButton = false;
                         }
+                        // vueInstance.infiniteScroll();
+                        console.log('scrollHeight', document.body.scrollHeight);
+                        console.log('window height', window.innerHeight);
+                        console.log('scrollTop', document.body.scrollTop);
                     });
+            },
+            infiniteScroll: function() {
+                var vueInstance = this;
+                var pageBottom =
+                    document.body.scrollHeight - window.innerHeight <=
+                    document.body.scrollTop + 100;
+
+                // setTimeout(function() {
+                //     if (pageBottom) {
+                //         vueInstance.more();
+                //     } else {
+                //         vueInstance.infiniteScroll();
+                //     }
+                // }, 500);
             }
         }
     });
