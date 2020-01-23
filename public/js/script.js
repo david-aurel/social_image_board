@@ -67,12 +67,13 @@
             file: null,
             modalId: location.hash.slice(1),
             lowestIdOnPage: 0,
-            showMoreButton: true
+            showMoreButton: false,
+            infiniteScrollTimer: 0,
+            stopInfiniteScroll: false
         },
         mounted: function() {
             var vueInstance = this;
             this.more();
-            this.infiniteScroll();
             addEventListener('hashchange', function() {
                 vueInstance.modalId = location.hash.slice(1);
             });
@@ -125,27 +126,31 @@
                         });
                         vueInstance.lowestIdOnPage = oldestImage.id;
                         if (vueInstance.lowestIdOnPage === res.data[0].id) {
-                            vueInstance.showMoreButton = false;
+                            // vueInstance.showMoreButton = false;
+                            vueInstance.stopInfiniteScroll = true;
                         }
-                        // vueInstance.infiniteScroll();
-                        console.log('scrollHeight', document.body.scrollHeight);
-                        console.log('window height', window.innerHeight);
-                        console.log('scrollTop', document.body.scrollTop);
+                    })
+                    .then(() => {
+                        vueInstance.infiniteScroll();
+                        if (vueInstance.stopInfiniteScroll) {
+                            clearTimeout(vueInstance.infiniteScrollTimer);
+                        }
                     });
             },
             infiniteScroll: function() {
                 var vueInstance = this;
                 var pageBottom =
-                    document.body.scrollHeight - window.innerHeight <=
-                    document.body.scrollTop + 100;
+                    document.documentElement.scrollTop + window.innerHeight >
+                    document.documentElement.scrollHeight - 100;
 
-                // setTimeout(function() {
-                //     if (pageBottom) {
-                //         vueInstance.more();
-                //     } else {
-                //         vueInstance.infiniteScroll();
-                //     }
-                // }, 500);
+                vueInstance.infiniteScrollTimer = setTimeout(function() {
+                    if (pageBottom) {
+                        vueInstance.more();
+                        // vueInstance.infiniteScroll();
+                    } else {
+                        vueInstance.infiniteScroll();
+                    }
+                }, 500);
             }
         }
     });
