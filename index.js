@@ -31,10 +31,15 @@ const uploader = multer({
 app.use(express.static('./public')); //set path for files
 app.use(express.json()); //use json for the axios requests
 
-app.get('/images', (req, res) => {
-    db.getImages().then(data => {
-        res.json(data);
-    });
+app.get('/images/:id', (req, res) => {
+    db.getImages(req.params.id)
+        .then(results => {
+            res.json(results);
+        })
+        .catch(err => {
+            console.log('err in GET /images/:id', err);
+            res.sendStatus(500);
+        });
 });
 
 app.post('/upload', uploader.single('file'), s3.upload, (req, res) => {

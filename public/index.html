@@ -33,8 +33,9 @@
                  <div class="img-wrapper">
                      <img :src="i.url">
                  </div>    
-                 <p>{{i.description}}</p>
+                 <p>{{i.title}}</p>
             </div>
+            <button v-if='showMoreButton' @click='more' class="more">more</button>
         </div>
     </main>
 

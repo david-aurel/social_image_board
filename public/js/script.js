@@ -53,15 +53,12 @@
             description: '',
             username: '',
             file: null,
-            modalId: false
+            modalId: false,
+            lowestIdOnPage: 0,
+            showMoreButton: true
         },
         mounted: function() {
-            var vueInstance = this;
-            axios.get('/images').then(function(res) {
-                for (var i = res.data.length - 1; i >= 0; i--) {
-                    vueInstance.images.push(res.data[i]);
-                }
-            });
+            this.more();
         },
         methods: {
             upload: function(e) {
@@ -89,6 +86,30 @@
             },
             closeModal: function() {
                 this.modalId = null;
+            },
+            more: function() {
+                var vueInstance = this;
+                axios
+                    .get(`/images/${vueInstance.lowestIdOnPage}`)
+                    .then(function(res) {
+                        for (var i in res.data) {
+                            vueInstance.images.push(res.data[i]);
+                        }
+                        var oldestImage = vueInstance.images.reduce(function(
+                            res,
+                            obj
+                        ) {
+                            if (obj.id < res.id) {
+                                return obj;
+                            } else {
+                                return res;
+                            }
+                        });
+                        vueInstance.lowestIdOnPage = oldestImage.id;
+                        if (vueInstance.lowestIdOnPage === res.data[0].id) {
+                            vueInstance.showMoreButton = false;
+                        }
+                    });
             }
         }
     });

@@ -63,3 +63,7 @@ nav form {
 .modal img {
     max-height: 200px;
 }
+
+.hidden {
+    display: none;
+}
