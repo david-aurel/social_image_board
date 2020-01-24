@@ -22,21 +22,25 @@
                 <button @click='upload'>submit</button>
             </form>
         </nav>
-        <modal
-        @close='closeModal'
-        :modal-id='modalId'
-        :class="{active: isActive}"
-        ></modal>
-
-        <div class="images" :class='{inactive: isActive}'>
-            <div v-if='images' v-for='i in images' class="img-card">
-                <a :href="'#' + i.id" @click='animateModal'>
-                    <div class="img-wrapper">
-                        <img :src="i.url">
-                    </div> 
-                </a>
+        <div class="container">
+            <div class="modalWrapper">
+                <modal
+                @close='closeModal'
+                :modal-id='modalId'
+                :class="{active: isActive}">
+                </modal>
             </div>
-            <button v-if='showMoreButton' @click='more' class="more">more</button>
+    
+            <div class="images" :class='{inactive: isActive}'>
+                <div v-if='images' v-for='i in images' class="img-card">
+                    <a :href="'#' + i.id" @click='animateModal'>
+                        <div class="img-wrapper">
+                            <img :src="i.url">
+                        </div> 
+                    </a>
+                </div>
+                <button v-if='showMoreButton' @click='more' class="more">more</button>
+            </div>
         </div>
     </main>
 

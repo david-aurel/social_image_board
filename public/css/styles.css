@@ -38,6 +38,10 @@ nav form {
     padding: 15px;
 }
 
+.container {
+    margin: 0 10vw;
+    overflow: hidden;
+}
 .images {
     position: relative;
     display: flex;
@@ -62,11 +66,17 @@ nav form {
     height: 100%;
 }
 
+.modalWrapper {
+    position: fixed;
+    padding: top;
+    width: 100%;
+    overflow: hidden;
+}
+
 .modal {
     display: flex;
     flex-direction: column;
-    position: absolute;
-    padding-top: 120px;
+    position: relative;
     top: 0;
     left: 0;
     right: 0;
