@@ -23,22 +23,24 @@
         },
         methods: {
             loadModal: function() {
-                var vueInstance = this;
-                var imageId = this.modalId;
-                axios.get(`/imageById/${imageId}`).then(function(res) {
-                    vueInstance.image = res.data.url;
-                    vueInstance.title = res.data.title;
-                    vueInstance.description = res.data.description;
-                    vueInstance.username = res.data.username;
-                    if (res.data === '') {
-                        return vueInstance.closeModal();
-                    }
-                });
-                axios.get(`/comments/${imageId}`).then(function(res) {
-                    for (var i = 0; i < res.data.length; i++) {
-                        vueInstance.comments.push(res.data[i]);
-                    }
-                });
+                if (this.modalId) {
+                    var vueInstance = this;
+                    var imageId = this.modalId;
+                    axios.get(`/imageById/${imageId}`).then(function(res) {
+                        vueInstance.image = res.data.url;
+                        vueInstance.title = res.data.title;
+                        vueInstance.description = res.data.description;
+                        vueInstance.username = res.data.username;
+                        if (res.data === '') {
+                            return vueInstance.closeModal();
+                        }
+                    });
+                    axios.get(`/comments/${imageId}`).then(function(res) {
+                        for (var i = 0; i < res.data.length; i++) {
+                            vueInstance.comments.push(res.data[i]);
+                        }
+                    });
+                }
             },
             closeModal: function() {
                 this.$emit('close');
@@ -69,13 +71,20 @@
             lowestIdOnPage: 0,
             showMoreButton: false,
             infiniteScrollTimer: 0,
-            stopInfiniteScroll: false
+            stopInfiniteScroll: false,
+            isActive: false
         },
         mounted: function() {
             var vueInstance = this;
+            if (this.modalId) {
+                this.isActive = true;
+            }
             this.more();
             addEventListener('hashchange', function() {
                 vueInstance.modalId = location.hash.slice(1);
+                if (location.hash.slice(1)) {
+                    vueInstance.isActive = true;
+                }
             });
         },
         methods: {
@@ -102,9 +111,13 @@
             handleFile: function(e) {
                 this.file = e.target.files[0];
             },
+            animateModal: function() {
+                this.isActive = true;
+            },
             closeModal: function() {
                 location.hash = '';
                 this.modalId = null;
+                this.isActive = false;
             },
             more: function() {
                 var vueInstance = this;

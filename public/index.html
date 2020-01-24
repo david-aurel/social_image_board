@@ -8,34 +8,32 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-    <nav>
-        <div>
-            <img src="icons/logo.svg" alt="">
-            <img src="icons/type.svg" alt="">
-        </div>
-    </nav>
     <main id="main">
+        <nav>
+            <div>
+                <img src="icons/logo.svg" id='logo' alt="">
+                <img src="icons/type.svg" alt="">
+            </div>
+            <form>
+                <input v-model='title' type="text" name="title" placeholder="title">
+                <input v-model='description' type="text" name="description" placeholder="description">
+                <input v-model='username' type="text" name="username" placeholder="username">
+                <input @change='handleFile' type="file" accept="image/*" name="file">
+                <button @click='upload'>submit</button>
+            </form>
+        </nav>
         <modal
-        v-if='modalId'
         @close='closeModal'
         :modal-id='modalId'
+        :class="{active: isActive}"
         ></modal>
-        <form>
-            <input v-model='title' type="text" name="title" placeholder="title">
-            <input v-model='description' type="text" name="description" placeholder="description">
-            <input v-model='username' type="text" name="username" placeholder="username">
-            <input @change='handleFile' type="file" accept="image/*" name="file">
-            <button @click='upload'>submit</button>
-        </form>
 
-        <div class="images">
+        <div class="images" :class='{inactive: isActive}'>
             <div v-if='images' v-for='i in images' class="img-card">
-                <a :href="'#' + i.id">
+                <a :href="'#' + i.id" @click='animateModal'>
                     <div class="img-wrapper">
                         <img :src="i.url">
-                    </div>    
-                    <p>{{i.title}}</p>
-
+                    </div> 
                 </a>
             </div>
             <button v-if='showMoreButton' @click='more' class="more">more</button>
@@ -48,10 +46,12 @@
             <!-- close modal -->
             <div class=closeModal @click='closeModal'>X</div>
             <!-- image -->
-            <img :src="image">
-            <p>title: {{title}}</p>
-            <p>description: {{description}}</p>
-            <p>username: {{username}}</p>
+            <div class='modalImg'>
+                <img :src="image">
+                <p>title: {{title}}</p>
+                <p>description: {{description}}</p>
+                <p>username: {{username}}</p>
+            </div>
             <!-- comments -->
             <form>
                 <input v-model='commentToUpload.comment' type="text" name='comment' placeholder='comment'>

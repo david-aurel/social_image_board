@@ -4,16 +4,25 @@
     font-family: sans-serif;
 }
 
+body {
+    padding-top: 120px;
+}
+
 nav {
+    z-index: 40;
+    position: fixed;
+    top: 0;
     display: flex;
     padding: 0 0 10px 0;
     margin: 0 0 10px 0;
+    background: white;
+    width: 100%;
 }
 
 nav div {
     display: flex;
     width: 100%;
-    height: 100px;
+    height: 75px;
     margin: 10px;
 }
 
@@ -25,43 +34,71 @@ nav form {
     align-self: flex-end;
 }
 
+#logo {
+    padding: 15px;
+}
+
 .images {
+    position: relative;
     display: flex;
     align-items: flex-start;
     flex-wrap: wrap;
     margin: 10px 0 0 0;
+    transition-duration: 0.5s;
 }
 
 .img-card {
-    border: 1px solid black;
-    width: 400px;
-    padding: 15px;
     margin: 15px;
 }
 
 .img-wrapper {
-    margin-bottom: 10px;
+    width: 200px;
+    height: 200px;
 }
 
 .img-card img {
+    object-fit: cover;
     width: 100%;
+    height: 100%;
 }
 
 .modal {
-    background: rgba(255, 105, 180, 0.8);
-    position: fixed;
-    top: 50px;
-    right: 50px;
-    bottom: 50px;
-    left: 50px;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    padding-top: 120px;
+    top: 0;
+    left: 0;
+    right: 0;
+    transform: translateX(100%);
+    bottom: 0;
+    transition-duration: 0.5s;
+    visibility: hidden;
 }
 
+.active {
+    transform: translateX(0%);
+    transition-property: transform;
+    transition-duration: 0.5s;
+    visibility: visible;
+}
+
+.inactive {
+    transform: translateX(-100%);
+    transition-property: transform;
+    transition-duration: 0.5s;
+}
 .closeModal {
     font-size: 40px;
 }
 
-.modal img {
-    max-height: 200px;
+.modalImg {
+    height: 50vh;
+    margin: 0 auto;
+}
+
+.modalImg img {
+    height: 100%;
 }
 
 .hidden {
