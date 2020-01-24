@@ -13,13 +13,15 @@ nav {
     position: fixed;
     top: 0;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 0 0 10px 0;
     margin: 0 0 10px 0;
     background: white;
     width: 100%;
 }
 
-nav div {
+nav .logo {
     display: flex;
     width: 100%;
     height: 75px;
@@ -35,6 +37,14 @@ nav form {
 }
 #logo {
     padding: 15px;
+}
+
+.uploadButton {
+    height: 40px;
+}
+
+.uploadButton img {
+    height: 100%;
 }
 
 .container {

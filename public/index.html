@@ -10,18 +10,19 @@
 <body>
     <main id="main">
         <nav>
-            <div>
+            <div class="logo">
                 <img src="icons/logo.svg" id='logo' alt="">
                 <img src="icons/type.svg" alt="">
             </div>
-            <form>
-                <input v-model='title' type="text" name="title" placeholder="title">
-                <input v-model='description' type="text" name="description" placeholder="description">
-                <input v-model='username' type="text" name="username" placeholder="username">
-                <input @change='handleFile' type="file" accept="image/*" name="file">
-                <button @click='upload'>submit</button>
-            </form>
+            <div @click='toggleUpload' class="uploadButton">
+                <img src="icons/upload.svg">
+            </div>
         </nav>
+
+        <upload @add-new-image='addNewImage' @close-upload='toggleUpload'
+        v-if='showUpload'>
+        </upload>
+
         <div class="container">
             <div class="modalWrapper" :class="{active: isActive}">
                 <modal
@@ -74,6 +75,21 @@
             <div class='delete'>
                 <img src="icons/delete.svg" alt="">
             </div>
+        </div>
+    </script>
+
+    <script id='upload' type="text/x-template">
+        <div class='upload'>
+            <div class='closeUpload' @click='closeUpload'>
+                X
+            </div>
+            <form>
+                <input v-model='title' type="text" name="title" placeholder="title">
+                <input v-model='description' type="text" name="description" placeholder="description">
+                <input v-model='username' type="text" name="username" placeholder="username">
+                <input @change='handleFile' type="file" accept="image/*" name="file">
+                <button @click='upload'>submit</button>
+            </form>
         </div>
     </script>
 

@@ -1,4 +1,48 @@
 (() => {
+    // Upload Modal
+    Vue.component('upload', {
+        template: '#upload',
+        props: [],
+        data: function() {
+            return {
+                title: null,
+                description: null,
+                username: null,
+                file: null
+            };
+        },
+        mounted: function() {},
+        methods: {
+            handleFile: function(e) {
+                this.file = e.target.files[0];
+            },
+            upload: function(e) {
+                e.preventDefault();
+                var formData = new FormData();
+                formData.append('title', this.title);
+                formData.append('description', this.description);
+                formData.append('username', this.username);
+                formData.append('file', this.file);
+
+                var vueInstance = this;
+                axios
+                    .post('/upload', formData)
+
+                    .then(function(res) {
+                        vueInstance.$emit('add-new-image', res.data);
+                    })
+                    .catch(function(err) {
+                        console.log('err in POST /upload', err);
+                    });
+            },
+            closeUpload: function() {
+                var vueInstance = this;
+                vueInstance.$emit('close-upload');
+            }
+        }
+    });
+
+    // Image Modal
     Vue.component('modal', {
         props: ['modalId'],
         data: function() {
@@ -59,20 +103,19 @@
             }
         }
     });
+
+    // Main
     new Vue({
         el: '#main',
         data: {
             images: [],
-            title: '',
-            description: '',
-            username: '',
-            file: null,
             modalId: location.hash.slice(1),
             lowestIdOnPage: 0,
             showMoreButton: false,
             infiniteScrollTimer: 0,
             stopInfiniteScroll: false,
-            isActive: false
+            isActive: false,
+            showUpload: false
         },
         mounted: function() {
             var vueInstance = this;
@@ -88,29 +131,6 @@
             });
         },
         methods: {
-            upload: function(e) {
-                e.preventDefault();
-                var formData = new FormData();
-                formData.append('title', this.title);
-                formData.append('description', this.description);
-                formData.append('username', this.username);
-
-                formData.append('file', this.file);
-
-                var vueInstance = this;
-                axios
-                    .post('/upload', formData)
-
-                    .then(function(res) {
-                        vueInstance.images.unshift(res.data);
-                    })
-                    .catch(function(err) {
-                        console.log('err in POST /upload', err);
-                    });
-            },
-            handleFile: function(e) {
-                this.file = e.target.files[0];
-            },
             animateModal: function() {
                 this.isActive = true;
             },
@@ -164,6 +184,12 @@
                         vueInstance.infiniteScroll();
                     }
                 }, 500);
+            },
+            toggleUpload: function() {
+                this.showUpload = !this.showUpload;
+            },
+            addNewImage: function(res) {
+                this.images.unshift(res);
             }
         }
     });

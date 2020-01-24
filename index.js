@@ -43,15 +43,9 @@ app.get('/images/:id', (req, res) => {
 });
 
 app.post('/upload', uploader.single('file'), s3.upload, (req, res) => {
+    // console.log('POST /upload route was hit');
     // insert a new row into the db for the image
     const imageUrl = s3Url + req.file.filename;
-    console.log(
-        'POST /upload route was hit',
-        imageUrl,
-        req.body.username,
-        req.body.title,
-        req.body.description
-    );
     db.addImage(
         imageUrl,
         req.body.username,
