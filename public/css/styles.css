@@ -33,26 +33,25 @@ nav div img {
 nav form {
     align-self: flex-end;
 }
-
 #logo {
     padding: 15px;
 }
 
 .container {
+    position: relative;
     margin: 0 10vw;
     overflow: hidden;
 }
 .images {
     position: relative;
     display: flex;
-    align-items: flex-start;
+    justify-content: center;
     flex-wrap: wrap;
-    margin: 10px 0 0 0;
     transition-duration: 0.5s;
 }
 
 .img-card {
-    margin: 15px;
+    margin: 0 15px 30px 15px;
 }
 
 .img-wrapper {
@@ -67,26 +66,27 @@ nav form {
 }
 
 .modalWrapper {
-    position: fixed;
-    padding: top;
+    position: absolute;
     width: 100%;
     overflow: hidden;
 }
 
 .modal {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 50px 1fr 50px;
+    grid-column-gap: 30px;
     position: relative;
     top: 0;
     left: 0;
     right: 0;
-    transform: translateX(100%);
     bottom: 0;
+    transform: translateX(100%);
     transition-duration: 0.5s;
     visibility: hidden;
 }
 
 .active {
+    width: 100%;
     transform: translateX(0%);
     transition-property: transform;
     transition-duration: 0.5s;
@@ -98,19 +98,84 @@ nav form {
     transition-property: transform;
     transition-duration: 0.5s;
 }
+
+.modalContent {
+    grid-column: 2 / 3;
+}
 .closeModal {
-    font-size: 40px;
+    grid-column: 1 / 2;
+    height: 50px;
+    width: 50px;
 }
 
-.modalImg {
-    height: 50vh;
-    margin: 0 auto;
-}
-
-.modalImg img {
+.closeModal img {
     height: 100%;
 }
 
-.hidden {
-    display: none;
+.modalImg {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.modalImg img {
+    width: 100%;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.username,
+.description {
+    font-size: 20px;
+}
+
+.title,
+.username {
+    display: inline-block;
+    margin: 30px 0 20px 0;
+}
+
+.commentsWrapper {
+    border-radius: 10px;
+    padding: 10px 20px;
+}
+.comment,
+.commentUsername {
+    display: inline-block;
+    font-size: 20px;
+    line-height: 2rem;
+}
+
+.commentUsername {
+    font-style: italic;
+    color: #38a1f3;
+}
+
+.modal form {
+    margin: 20px 0;
+}
+
+.modal form input,
+.modal form button,
+.modal form textarea {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    font-size: 15px;
+}
+.modal form textarea {
+    width: 100%;
+    height: 100px;
+    resize: none;
+}
+
+.delete {
+    grid-column: 3 / 4;
+    height: 50px;
+    width: 50px;
+}
+
+.delete img {
+    height: 100%;
 }

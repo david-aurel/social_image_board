@@ -23,14 +23,13 @@
             </form>
         </nav>
         <div class="container">
-            <div class="modalWrapper">
+            <div class="modalWrapper" :class="{active: isActive}">
                 <modal
                 @close='closeModal'
                 :modal-id='modalId'
                 :class="{active: isActive}">
-                </modal>
+            </modal>
             </div>
-    
             <div class="images" :class='{inactive: isActive}'>
                 <div v-if='images' v-for='i in images' class="img-card">
                     <a :href="'#' + i.id" @click='animateModal'>
@@ -48,29 +47,39 @@
     <script id="modal" type="text/x-template">
         <div class='modal'>
             <!-- close modal -->
-            <div class=closeModal @click='closeModal'>X</div>
-            <!-- image -->
-            <div class='modalImg'>
-                <img :src="image">
-                <p>title: {{title}}</p>
-                <p>description: {{description}}</p>
-                <p>username: {{username}}</p>
+            <div class=closeModal @click='closeModal'>
+                <img src="icons/back.svg" alt="">
             </div>
-            <!-- comments -->
-            <form>
-                <input v-model='commentToUpload.comment' type="text" name='comment' placeholder='comment'>
-                <input v-model='commentToUpload.username' type="text" name='username' placeholder='username'>
-                <button @click='comment'>submit</button>
-            </form>
-            <div v-if='comments' v-for='comment in comments' class='comments'>
-                <p>"{{comment.username}}" says "{{comment.comment}}"</p>
+            <div class="modalContent">
+                <!-- image -->
+                <div class='modalImg'>
+                    <img :src="image">
+                    <p class='title'>"{{title}}"</p>
+                    <p class='username'>by {{username}}</p>
+                    <p class='description'>{{description}}</p>
+                </div>
+                <!-- comments -->
+                <div class="commentsWrapper">
+                    <div v-if='comments' v-for='comment in comments' class='comments'>
+                        <p class='comment'>"{{comment.comment}}"</p>
+                        <p class='commentUsername'>-{{comment.username}}</p>
+                    </div>
+                </div>
+                <form>
+                    <textarea v-model='commentToUpload.comment' name='comment' placeholder='comment'rows='3'></textarea>
+                    <input v-model='commentToUpload.username' type="text" name='username' placeholder='username'>
+                    <button @click='comment'>comment</button>
+                </form>
             </div>
-
+            <div class='delete'>
+                <img src="icons/delete.svg" alt="">
+            </div>
         </div>
     </script>
 
 
     <!-- Scripts -->
+    <script src="https://kit.fontawesome.com/effa1431ca.js"></script>
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
     <script src="/js/script.js"></script>
