@@ -19,19 +19,18 @@
             </div>
         </nav>
 
-        <upload @add-new-image='addNewImage' @close-upload='toggleUpload'
-        v-if='showUpload'>
+        <upload @add-new-image='addNewImage' @close-upload='toggleUpload' :class='{active: animateUpload}'>
         </upload>
 
         <div class="container">
-            <div class="modalWrapper" :class="{active: isActive}">
+            <div class="modalWrapper" :class="{active: animateModal}">
                 <modal
                 @close='closeModal'
                 :modal-id='modalId'
-                :class="{active: isActive}">
+                :class="{active: animateModal}">
             </modal>
             </div>
-            <div class="images" :class='{inactive: isActive}'>
+            <div class="images" :class='{inactive: animateModal}'>
                 <div v-if='images' v-for='i in images' class="img-card">
                     <a :href="'#' + i.id" @click='animateModal'>
                         <div class="img-wrapper">
@@ -80,14 +79,14 @@
 
     <script id='upload' type="text/x-template">
         <div class='upload'>
-            <div class='closeUpload' @click='closeUpload'>
-                X
-            </div>
             <form>
-                <input v-model='title' type="text" name="title" placeholder="title">
-                <input v-model='description' type="text" name="description" placeholder="description">
-                <input v-model='username' type="text" name="username" placeholder="username">
-                <input @change='handleFile' type="file" accept="image/*" name="file">
+                <div>
+                    <input v-model='title' type="text" name="title" placeholder="title">
+                    <input v-model='username' type="text" name="username" placeholder="username">
+                    <label for="inputfile">choose file...</label>
+                    <input @change='handleFile' type="file" accept="image/*" name="file" id='inputfile'>
+                </div>
+                <textarea v-model='description' type="text" name="description" placeholder="description"></textarea>
                 <button @click='upload'>submit</button>
             </form>
         </div>

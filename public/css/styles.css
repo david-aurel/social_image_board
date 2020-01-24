@@ -8,8 +8,9 @@ body {
     padding-top: 120px;
 }
 
+/* navbar */
 nav {
-    z-index: 40;
+    z-index: 2;
     position: fixed;
     top: 0;
     display: flex;
@@ -47,10 +48,72 @@ nav form {
     height: 100%;
 }
 
+/* upload modal */
+.upload {
+    padding-top: 120px;
+    position: fixed;
+    top: 100px;
+    right: 0;
+    background: white;
+    z-index: 1;
+    padding: 30px;
+    transform: translateY(-110%);
+    transition: 0.5s;
+    width: 100%;
+}
+
+.upload form {
+    display: flex;
+    flex-direction: column;
+}
+.upload form input,
+.upload form textarea,
+.upload form button,
+label[for='inputfile'] {
+    font-size: 20px;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+}
+
+.upload form textarea {
+    height: 100px;
+    resize: none;
+}
+
+.upload form button {
+    align-self: center;
+    border: 1px solid #38a1f3;
+    font-style: italic;
+    color: #38a1f3;
+}
+
+#inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+label[for='inputfile'] {
+    color: grey;
+}
+label[for='inputfile'],
+.upload form button,
+.uploadButton {
+    cursor: pointer; /* "hand" cursor */
+}
+
+/* main window */
 .container {
     position: relative;
-    margin: 0 10vw;
+    margin: 0 auto;
     overflow: hidden;
+    max-width: 920px;
 }
 .images {
     position: relative;
@@ -75,6 +138,7 @@ nav form {
     height: 100%;
 }
 
+/* image modal */
 .modalWrapper {
     position: absolute;
     width: 100%;
@@ -97,7 +161,7 @@ nav form {
 
 .active {
     width: 100%;
-    transform: translateX(0%);
+    transform: translate(0%, 0%);
     transition-property: transform;
     transition-duration: 0.5s;
     visibility: visible;
@@ -173,6 +237,7 @@ nav form {
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 5px;
     font-size: 15px;
+    padding: 10px;
 }
 .modal form textarea {
     width: 100%;

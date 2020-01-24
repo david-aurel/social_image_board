@@ -18,6 +18,7 @@
             },
             upload: function(e) {
                 e.preventDefault();
+                this.closeUpload();
                 var formData = new FormData();
                 formData.append('title', this.title);
                 formData.append('description', this.description);
@@ -114,30 +115,30 @@
             showMoreButton: false,
             infiniteScrollTimer: 0,
             stopInfiniteScroll: false,
-            isActive: false,
-            showUpload: false
+            animateModal: false,
+            animateUpload: false
         },
         mounted: function() {
             var vueInstance = this;
             if (this.modalId) {
-                this.isActive = true;
+                this.animateModal = true;
             }
             this.more();
             addEventListener('hashchange', function() {
                 vueInstance.modalId = location.hash.slice(1);
                 if (location.hash.slice(1)) {
-                    vueInstance.isActive = true;
+                    vueInstance.animateModal = true;
                 }
             });
         },
         methods: {
             animateModal: function() {
-                this.isActive = true;
+                this.animateModal = true;
             },
             closeModal: function() {
                 location.hash = '';
                 this.modalId = null;
-                this.isActive = false;
+                this.animateModal = false;
             },
             more: function() {
                 var vueInstance = this;
@@ -186,7 +187,7 @@
                 }, 500);
             },
             toggleUpload: function() {
-                this.showUpload = !this.showUpload;
+                this.animateUpload = !this.animateUpload;
             },
             addNewImage: function(res) {
                 this.images.unshift(res);
