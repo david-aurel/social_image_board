@@ -92,4 +92,16 @@ app.post('/comment/:comment/:username/:imageId', (req, res) => {
         });
 });
 
+app.post('/delete/:id', (req, res) => {
+    // console.log('POST /delete/:id was hit');
+    db.deleteImage(req.params.id)
+        .then(() => {
+            res.sendStatus(200);
+        })
+        .catch(err => {
+            console.log('err in POST /delete', err);
+            res.sendStatus(500);
+        });
+});
+
 app.listen(8080);

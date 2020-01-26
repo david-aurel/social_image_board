@@ -88,6 +88,7 @@
                 }
             },
             closeModal: function() {
+                this.comments = [];
                 this.$emit('close');
             },
             comment: function(e) {
@@ -100,7 +101,18 @@
                     .post(`/comment/${comment}/${username}/${imageId}`)
                     .then(function(res) {
                         vueInstance.comments.push(res.data);
+                        vueInstance.commentToUpload = {};
                     });
+            },
+            deleteImg: function() {
+                var vueInstance = this;
+                axios.post(`/delete/${vueInstance.modalId}`).then(() => {
+                    vueInstance.closeModal();
+                    vueInstance.$emit(
+                        'delete-img-from-vue',
+                        vueInstance.modalId
+                    );
+                });
             }
         }
     });
@@ -132,7 +144,7 @@
             });
         },
         methods: {
-            animateModal: function() {
+            modalAnimation: function() {
                 this.animateModal = true;
             },
             closeModal: function() {
@@ -191,6 +203,13 @@
             },
             addNewImage: function(res) {
                 this.images.unshift(res);
+            },
+            deleteImgFromVue: function(id) {
+                for (var i in this.images) {
+                    if (this.images[i].id == id) {
+                        this.images.splice(i, 1);
+                    }
+                }
             }
         }
     });

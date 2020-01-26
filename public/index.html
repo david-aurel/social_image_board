@@ -26,13 +26,14 @@
             <div class="modalWrapper" :class="{active: animateModal}">
                 <modal
                 @close='closeModal'
+                @delete-img-from-vue='deleteImgFromVue'
                 :modal-id='modalId'
                 :class="{active: animateModal}">
             </modal>
             </div>
             <div class="images" :class='{inactive: animateModal}'>
                 <div v-if='images' v-for='i in images' class="img-card">
-                    <a :href="'#' + i.id" @click='animateModal'>
+                    <a :href="'#' + i.id" @click='modalAnimation'>
                         <div class="img-wrapper">
                             <img :src="i.url">
                         </div> 
@@ -71,7 +72,7 @@
                     <button @click='comment'>comment</button>
                 </form>
             </div>
-            <div class='delete'>
+            <div class='delete' @click='deleteImg'>
                 <img src="icons/delete.svg" alt="">
             </div>
         </div>

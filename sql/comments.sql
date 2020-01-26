@@ -4,7 +4,7 @@ CREATE TABLE comments
 (
     comment TEXT NOT NULL,
     username VARCHAR(255) NOT NULL,
-    imageId INT NOT NULL,
+    imageId INT NOT NULL REFERENCES images (id) ON DELETE CASCADE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

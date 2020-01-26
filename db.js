@@ -53,3 +53,7 @@ exports.getComments = imageId => {
         .query(`SELECT * FROM comments WHERE imageId = $1`, [imageId])
         .then(({ rows }) => rows);
 };
+
+exports.deleteImage = id => {
+    return db.query(`DELETE FROM images WHERE id = $1`, [id]);
+};

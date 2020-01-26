@@ -104,7 +104,9 @@ label[for='inputfile'] {
 }
 label[for='inputfile'],
 .upload form button,
-.uploadButton {
+.uploadButton,
+.delete,
+.closeModal {
     cursor: pointer; /* "hand" cursor */
 }
 
