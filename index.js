@@ -47,8 +47,11 @@ let auth = (req, res, next) => {
             'WWW-Authenticate',
             'Basic realm="Enter valid credentials to see this."'
         );
+        console.log('auth error here');
+
         res.sendStatus(401);
     } else {
+        console.log('next was called');
         next();
     }
 };
