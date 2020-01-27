@@ -32,6 +32,8 @@
                 formData.append('username', this.username);
                 formData.append('file', this.file);
 
+                console.log('sending upload to backend:', formData);
+
                 var vueInstance = this;
                 axios
                     .post('/upload', formData)

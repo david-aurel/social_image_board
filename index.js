@@ -57,7 +57,6 @@ let auth = (req, res, next) => {
         res.sendStatus(401);
     } else {
         console.log('creds in next()', creds);
-
         next();
     }
 };
@@ -74,33 +73,24 @@ app.get('/images/:id', (req, res) => {
         });
 });
 
-app.post(
-    '/upload',
-    function(req, res, next) {
-        console.log('test');
-        next();
-    },
-    uploader.single('file'),
-    s3.upload,
-    (req, res) => {
-        // console.log('POST /upload route was hit');
-        // insert a new row into the db for the image
-        const imageUrl = s3Url + req.file.filename;
-        db.addImage(
-            imageUrl,
-            req.body.username,
-            req.body.title,
-            req.body.description
-        )
-            .then(({ rows }) => {
-                res.json(rows[0]); // after the query is successful, send a response
-            })
-            .catch(err => {
-                console.log(err);
-                res.sendStatus(500);
-            });
-    }
-);
+app.post('/upload', uploader.single('file'), s3.upload, (req, res) => {
+    // console.log('POST /upload route was hit');
+    // insert a new row into the db for the image
+    const imageUrl = s3Url + req.file.filename;
+    db.addImage(
+        imageUrl,
+        req.body.username,
+        req.body.title,
+        req.body.description
+    )
+        .then(({ rows }) => {
+            res.json(rows[0]); // after the query is successful, send a response
+        })
+        .catch(err => {
+            console.log(err);
+            res.sendStatus(500);
+        });
+});
 
 app.get('/imageById/:id', (req, res) => {
     // console.log('GET /imageById/:id was hit');
