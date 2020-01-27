@@ -45,6 +45,7 @@ let auth = (req, res, next) => {
     if (!creds || creds.name != secrets.login || creds.pass != secrets.pass) {
         console.log(secrets.login);
         console.log(secrets.pass);
+        console.log(creds);
 
         res.setHeader(
             'WWW-Authenticate',
