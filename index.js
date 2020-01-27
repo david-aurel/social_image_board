@@ -34,25 +34,25 @@ app.use(express.static('./public')); //set path for files
 app.use(express.json()); //use json for the axios requests
 
 // basic auth
-let secrets;
-if (process.env.NODE_ENV == 'production') {
-    secrets = process.env; // in prod the secrets are environment variables
-} else {
-    secrets = require('./secrets'); // in dev they are in secrets.json which is listed in .gitignore
-}
-let auth = (req, res, next) => {
-    let creds = basicAuth(req);
-    if (!creds || creds.name != secrets.login || creds.pass != secrets.pass) {
-        res.setHeader(
-            'WWW-Authenticate',
-            'Basic realm="Enter valid credentials to see this."'
-        );
-        res.sendStatus(401);
-    } else {
-        next();
-    }
-};
-app.use(auth);
+// let secrets;
+// if (process.env.NODE_ENV == 'production') {
+//     secrets = process.env; // in prod the secrets are environment variables
+// } else {
+//     secrets = require('./secrets'); // in dev they are in secrets.json which is listed in .gitignore
+// }
+// let auth = (req, res, next) => {
+//     let creds = basicAuth(req);
+//     if (!creds || creds.name != secrets.login || creds.pass != secrets.pass) {
+//         res.setHeader(
+//             'WWW-Authenticate',
+//             'Basic realm="Enter valid credentials to see this."'
+//         );
+//         res.sendStatus(401);
+//     } else {
+//         next();
+//     }
+// };
+// app.use(auth);
 
 app.get('/images/:id', (req, res) => {
     db.getImages(req.params.id)
