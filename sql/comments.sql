@@ -7,5 +7,3 @@ CREATE TABLE comments
     imageId INT NOT NULL REFERENCES images (id) ON DELETE CASCADE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
-

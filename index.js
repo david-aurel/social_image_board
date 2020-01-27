@@ -74,9 +74,14 @@ app.post('/upload', uploader.single('file'), s3.upload, (req, res) => {
         req.body.username,
         req.body.title,
         req.body.description
-    ).then(({ rows }) => {
-        res.json(rows[0]); // after the query is successful, send a response
-    });
+    )
+        .then(({ rows }) => {
+            res.json(rows[0]); // after the query is successful, send a response
+        })
+        .catch(err => {
+            console.log(err);
+            res.sendStatus(500);
+        });
 });
 
 app.get('/imageById/:id', (req, res) => {
