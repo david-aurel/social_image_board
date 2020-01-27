@@ -34,9 +34,15 @@ app.use(express.static('./public')); //set path for files
 app.use(express.json()); //use json for the axios requests
 
 // basic auth
+let secrets;
+if (process.env.NODE_ENV == 'production') {
+    secrets = process.env; // in prod the secrets are environment variables
+} else {
+    secrets = require('./secrets'); // in dev they are in secrets.json which is listed in .gitignore
+}
 let auth = (req, res, next) => {
     let creds = basicAuth(req);
-    if (!creds || creds.name != '5o#PHb99' || creds.pass != 'rJ*02X%y') {
+    if (!creds || creds.name != secrets.login || creds.pass != secrets.pass) {
         res.setHeader(
             'WWW-Authenticate',
             'Basic realm="Enter valid credentials to see this."'
