@@ -44,7 +44,7 @@ let auth = (req, res, next) => {
     let creds = basicAuth(req);
 
     if (!creds || creds.name != secrets.login || creds.pass != secrets.pass) {
-        console.log('req', req);
+        // console.log('req', req);
         console.log(secrets.login);
         console.log(secrets.pass);
         console.log(creds);
@@ -56,6 +56,8 @@ let auth = (req, res, next) => {
         console.log('auth error here');
         res.sendStatus(401);
     } else {
+        console.log('creds in next()', creds);
+
         next();
     }
 };
