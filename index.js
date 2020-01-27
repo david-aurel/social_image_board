@@ -117,7 +117,7 @@ app.get('/comments/:imageId', (req, res) => {
 });
 
 app.post('/comment/:comment/:username/:imageId', (req, res) => {
-    // console.log('POST /comment/: route was hit');
+    console.log('POST /comment/: route was hit');
     db.addComment(req.params.comment, req.params.username, req.params.imageId)
         .then(({ rows }) => {
             res.json(rows[0]);

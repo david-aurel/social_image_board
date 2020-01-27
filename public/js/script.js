@@ -36,7 +36,7 @@
 
                 var vueInstance = this;
                 axios
-                    .post('/upload', formData)
+                    .post('/comment/g/g/72', formData)
 
                     .then(function(res) {
                         vueInstance.$emit('add-new-image', res.data);
