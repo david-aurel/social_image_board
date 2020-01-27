@@ -46,7 +46,6 @@ let auth = (req, res, next) => {
         next();
     }
 };
-
 app.use(auth);
 
 app.get('/images/:id', (req, res) => {
@@ -122,4 +121,7 @@ app.post('/delete/:id', (req, res) => {
         });
 });
 
-app.listen(8080);
+//server
+if (require.main == module) {
+    app.listen(process.env.PORT || 8080, () => console.log('listening...'));
+}

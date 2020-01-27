@@ -1,5 +1,8 @@
 const spicedPg = require('spiced-pg'),
-    db = spicedPg('postgres:postgres:postgres@localhost:5432/bitter');
+    db = spicedPg(
+        process.env.DATABASE_URL ||
+            'postgres:postgres:postgres@localhost:5432/bitter'
+    );
 
 exports.getImages = lastId => {
     if (lastId != 0) {
