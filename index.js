@@ -42,9 +42,9 @@ if (process.env.NODE_ENV == 'production') {
 }
 let auth = (req, res, next) => {
     let creds = basicAuth(req);
-    console.log('req', req);
 
     if (!creds || creds.name != secrets.login || creds.pass != secrets.pass) {
+        console.log('req', req);
         console.log(secrets.login);
         console.log(secrets.pass);
         console.log(creds);
