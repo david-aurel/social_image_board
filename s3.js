@@ -3,7 +3,7 @@ const fs = require('fs');
 
 let secrets;
 if (process.env.NODE_ENV == 'production') {
-    secrets = process.env.AWS_SECRET; // in prod the secrets are environment variables
+    secrets = process.env; // in prod the secrets are environment variables
 } else {
     secrets = require('./secrets'); // in dev they are in secrets.json which is listed in .gitignore
 }
