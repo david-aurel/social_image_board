@@ -8,13 +8,20 @@
                 title: null,
                 description: null,
                 username: null,
-                file: null
+                file: null,
+                fileName: 'choose file...'
             };
         },
         mounted: function() {},
         methods: {
             handleFile: function(e) {
                 this.file = e.target.files[0];
+                var fileName = e.target.files[0].name;
+                this.fileName = fileName;
+                if (this.fileName.length > 20) {
+                    this.fileName =
+                        fileName.slice(0, 10) + '...' + fileName.slice(-10);
+                }
             },
             upload: function(e) {
                 e.preventDefault();
@@ -49,9 +56,9 @@
         data: function() {
             return {
                 image: null,
-                title: null,
-                description: null,
-                username: null,
+                title: 'Untitled',
+                description: 'No Description.',
+                username: 'anonymous',
                 comments: [],
                 commentToUpload: {}
             };
@@ -73,9 +80,21 @@
                     var imageId = this.modalId;
                     axios.get(`/imageById/${imageId}`).then(function(res) {
                         vueInstance.image = res.data.url;
-                        vueInstance.title = res.data.title;
-                        vueInstance.description = res.data.description;
-                        vueInstance.username = res.data.username;
+                        if (res.data.title === 'null') {
+                            vueInstance.title = 'Untitled';
+                        } else {
+                            vueInstance.title = res.data.title;
+                        }
+                        if (res.data.description === 'null') {
+                            vueInstance.description = 'No description.';
+                        } else {
+                            vueInstance.description = res.data.description;
+                        }
+                        if (res.data.username === 'null') {
+                            vueInstance.username = 'anonymous';
+                        } else {
+                            vueInstance.username = res.data.username;
+                        }
                         if (res.data === '') {
                             return vueInstance.closeModal();
                         }
@@ -85,6 +104,7 @@
                             vueInstance.comments.push(res.data[i]);
                         }
                     });
+                    document.documentElement.scrollTop = 0;
                 }
             },
             closeModal: function() {

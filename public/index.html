@@ -15,7 +15,7 @@
                 <img src="icons/type.svg" alt="">
             </div>
             <div @click='toggleUpload' class="uploadButton">
-                <img src="icons/upload.svg">
+                <img src="icons/upload.svg" :class="{uploadActive: animateUpload}">
             </div>
         </nav>
 
@@ -84,7 +84,7 @@
                 <div>
                     <input v-model='title' type="text" name="title" placeholder="title">
                     <input v-model='username' type="text" name="username" placeholder="username">
-                    <label for="inputfile">choose file...</label>
+                    <label for="inputfile">{{fileName}}</label>
                     <input @change='handleFile' type="file" accept="image/*" name="file" id='inputfile'>
                 </div>
                 <textarea v-model='description' type="text" name="description" placeholder="description"></textarea>

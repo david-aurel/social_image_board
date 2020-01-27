@@ -87,6 +87,7 @@ label[for='inputfile'] {
     align-self: center;
     border: 1px solid #38a1f3;
     font-style: italic;
+    font-weight: bold;
     color: #38a1f3;
 }
 
@@ -108,6 +109,14 @@ label[for='inputfile'],
 .delete,
 .closeModal {
     cursor: pointer; /* "hand" cursor */
+}
+
+.uploadButton img,
+.uploadActive {
+    transition-duration: 0.5s;
+}
+.uploadActive {
+    opacity: 0.3;
 }
 
 /* main window */
