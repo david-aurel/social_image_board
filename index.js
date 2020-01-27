@@ -43,15 +43,16 @@ if (process.env.NODE_ENV == 'production') {
 let auth = (req, res, next) => {
     let creds = basicAuth(req);
     if (!creds || creds.name != secrets.login || creds.pass != secrets.pass) {
+        console.log(secrets.login);
+        console.log(secrets.pass);
+
         res.setHeader(
             'WWW-Authenticate',
             'Basic realm="Enter valid credentials to see this."'
         );
         console.log('auth error here');
-
         res.sendStatus(401);
     } else {
-        console.log('next was called');
         next();
     }
 };
