@@ -103,6 +103,7 @@ label[for='inputfile'] {
 label[for='inputfile'] {
     color: grey;
 }
+
 label[for='inputfile'],
 .upload form button,
 .uploadButton,

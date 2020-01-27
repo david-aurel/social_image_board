@@ -1,5 +1,7 @@
+// requiere node packages
 const express = require('express'),
-    app = express(); // create express
+    app = express(), // create express
+    basicAuth = require('basic-auth');
 
 // require other files
 const db = require('./db');
@@ -30,6 +32,22 @@ const uploader = multer({
 
 app.use(express.static('./public')); //set path for files
 app.use(express.json()); //use json for the axios requests
+
+// basic auth
+let auth = (req, res, next) => {
+    let creds = basicAuth(req);
+    if (!creds || creds.name != '5o#PHb99' || creds.pass != 'rJ*02X%y') {
+        res.setHeader(
+            'WWW-Authenticate',
+            'Basic realm="Enter valid credentials to see this."'
+        );
+        res.sendStatus(401);
+    } else {
+        next();
+    }
+};
+
+app.use(auth);
 
 app.get('/images/:id', (req, res) => {
     db.getImages(req.params.id)
