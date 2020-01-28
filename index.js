@@ -1,7 +1,7 @@
 // requiere node packages
 const express = require('express'),
     app = express(), // create express
-    basicAuth = require('basic-auth');
+    basicAuth = require('express-basic-auth');
 
 // require other files
 const db = require('./db');
@@ -40,26 +40,13 @@ if (process.env.NODE_ENV == 'production') {
 } else {
     secrets = require('./secrets'); // in dev they are in secrets.json which is listed in .gitignore
 }
-let auth = (req, res, next) => {
-    let creds = basicAuth(req);
 
-    if (!creds || creds.name != secrets.login || creds.pass != secrets.pass) {
-        // console.log('req', req);
-        console.log(secrets.login);
-        console.log(secrets.pass);
-        console.log(creds);
-        res.setHeader(
-            'WWW-Authenticate',
-            'Basic realm="Enter valid credentials to see this."'
-        );
-        console.log('auth error here');
-        res.sendStatus(401);
-    } else {
-        console.log('creds in next()', creds);
-        next();
-    }
-};
-app.use(auth);
+app.use(
+    basicAuth({
+        users: { peppermint: secrets.pass },
+        challenge: true
+    })
+);
 
 app.get('/images/:id', (req, res) => {
     db.getImages(req.params.id)
