@@ -1,16 +1,49 @@
-# Image Board
+First time using Vue.js! This project came to life when I realized the world was in need of more blurry, shaky, accidentally captured b-roll images. Everybody has the permission to upload or delete any picture, that guarantees there are no bad pictures on the site. The comment section underneath a picture opens a space for discussions and feedback. My plans for the future are to come up with a better branding and to deploy this.
 
-![Gif of Image Board](image_board.gif)
+---
 
-A single page application image board with comment functionality, built in Vue.js.
+### Backend
 
-This project came to life when I realized the world was in need of more blurry and shaky z-roll images. There are no users, just one big image board where everybody can upload. Everybody has the permission to delete any picture, that guarantees there are no bad pictures on the site. The comment section underneath a picture is where the real action is at, just like on reddit or youtube. My plans for the future are to come up with a better branding and to deploy this.
+In the back, a Node.js Express server and a PostgreSQL database CRUDfully make sure everything is kept alive.
 
-#### Features:
+![img](./readme_images/start.png)
 
-- A Node Express and SQL database backend
-- New images get handled using Multer, then uploaded to AWS S3, a reference gets stored in the database
-- The image board displayes the 20 most recent pictures, upon scrolling down more images are being loaded and displayed
-- Navigation is provided with hash routing
-- Useres can write comments on individal images
-- Users can delete images
+The image board displayes the 20 most recent pictures, upon scrolling down more images are being loaded and displayed
+
+![img](./readme_images/scroll.png)
+
+---
+
+### Upload
+
+New images get grabbed using Multer, then uploaded to AWS S3, with a reference stored in the database.
+
+![img](./readme_images/upload.png)
+
+---
+
+### Interaction
+
+Visit a posts page, to get a better look.
+
+![img](./readme_images/comment1.png)
+
+Interact with the author, ask questions, critique, praise, or simply share your thoughts in the comment section.
+
+![img](./readme_images/comment2.png)
+
+---
+
+### Frontend
+
+In the front, Vue.js works its magic.
+
+I wanted the design to be kinda shitty so all icons are carelessly hand drawn with a trackpad.
+
+![img](./readme_images/icons.jpg)
+
+Navigation to different pages is provided with Hash-Routing, so that posts can be sent to other places on the internet.
+
+![img](./readme_images/url.png)
+
+---
