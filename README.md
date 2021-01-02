@@ -33,17 +33,3 @@ Interact with the author, ask questions, critique, praise, or simply share your 
 ![img](./readme_images/comment2.png)
 
 ---
-
-### Frontend
-
-In the front, Vue.js works its magic.
-
-I wanted the design to be kinda shitty so all icons are carelessly hand drawn with a trackpad.
-
-![img](./readme_images/icons.jpg)
-
-Navigation to different pages is provided with Hash-Routing, so that posts can be sent to other places on the internet.
-
-![img](./readme_images/url.png)
-
----
