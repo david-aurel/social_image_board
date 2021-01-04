@@ -1,10 +1,9 @@
-First time using Vue.js! This project came to life when I realized the world was in need of more blurry, shaky, accidentally captured b-roll images. Everybody has the permission to upload or delete any picture, that guarantees there are no bad pictures on the site. The comment section underneath a picture opens a space for discussions and feedback. My plans for the future are to come up with a better branding and to deploy this.
-
+First time using Vue.js! This project came to life when I realized the world was in need of more blurry, shaky, accidentally captured b-roll images.
 ---
 
 ### Backend
 
-In the back, a Node.js Express server and a PostgreSQL database CRUDfully make sure everything is kept alive.
+In the back, a Node.js Express server and a PostgreSQL database CRUDfully keep the app alive.
 
 ![img](./readme_images/start.png)
 
